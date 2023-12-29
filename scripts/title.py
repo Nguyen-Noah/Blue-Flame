@@ -14,9 +14,12 @@ class Title:
         # title screen
         res = self.game.window.screen.get_size()
         self.surf = pygame.Surface(res)
-        self.surf.fill((10, 10, 10))
+        self.surf.fill((0, 0, 0))
+        self.surf.blit(self.game.assets.background['vignette'], (0, 0))
         big_font = pygame.font.Font('data/fonts/Horison.ttf', 50)
         title = big_font.render('Blue Flame', True, 'white')
+        title_shadow = big_font.render('Blue Flame', True, 'black')
+        self.surf.blit(title_shadow, (((res[0] // 2) - title.get_width() // 2) + 4, ((res[1] // 2) - title.get_height() // 2) + 4))
         self.surf.blit(title, ((res[0] // 2) - title.get_width() // 2, (res[1] // 2) - title.get_height() // 2))
         small_font = pygame.font.Font('data/fonts/Horison.ttf', 18)
         self.click_text = small_font.render('Click to Play', True, 'white')

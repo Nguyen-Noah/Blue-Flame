@@ -17,8 +17,17 @@ class Player:
         self.game.audio.add('bump.wav', 0.5)
         self.game.audio.add('death.wav', 0.5)
 
+    def reset(self):
+        self.alive = True
+        self.pos = [self.game.window.game_resolution[0] // 2, ((self.game.window.game_resolution[1] // 3) * 2) + 50]
+        self.health = 100
+        self.gravity = 0
+        self.velocity = [0, 0]
+        self.hook.reset()
+
     def die(self):
         self.alive = False
+        self.game.world.leaderboard.add_score(int(self.game.world.true_score))
         self.game.audio.play('death')
         self.game.world.vfx.spawn_vfx('circle', self, (self.pos[0] + self.radius, self.pos[1] + self.radius), 20, 15, 40, 100)
         self.game.world.vfx.spawn_vfx('circle', self, (self.pos[0] + self.radius, self.pos[1] + self.radius), 20, 20, 90, 300)

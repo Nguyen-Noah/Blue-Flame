@@ -52,7 +52,7 @@ class Background:
                 self.squares.pop(i)
 
     def render(self, surf, scroll=0):
-        surf.blit(self.game.assets.background['gradient_n'], (0, 0))
+        surf.blit(self.game.assets.background['gradient'], (0, 0))
 
         for square in self.squares:
             square.render(surf, scroll)

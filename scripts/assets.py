@@ -7,6 +7,7 @@ class Assets:
         self.particles = self.load_dirs('data/graphics/particles')
         self.game_assets = self.load_dir('data/graphics/game')
         self.background = self.load_dir('data/graphics/background')
+        self.tutorial = self.load_dir('data/graphics/tutorial')
 
     def load_dirs(self, path):
         dirs = {}

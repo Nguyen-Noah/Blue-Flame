@@ -12,6 +12,7 @@ class Flare:
         self.alive = True
         self.hooked = False
         self.hook_direction = None
+        self.hook_pos_difference = 0
 
     @property
     def rect(self):
@@ -50,6 +51,7 @@ class Flare:
         self.game.world.player.hook.reset()
         self.alive = False
         self.game.audio.play('explosion')
+        self.game.world.score += 10 * self.game.world.difficulty_level
 
         self.game.window.add_screen_shake(4)
         if self.recharge:
@@ -73,6 +75,7 @@ class Flare:
         if self.hooked:
             if self.hook_direction == None:
                 self.hook_direction = self.game.world.player.pos[1] > self.pos[1]
+                self.hook_pos_difference = self.game.world.player.pos[1] - self.pos[1]
 
             self.pos[0] -= dist_from_player[0] * dt * 0.6
             self.pos[1] -= dist_from_player[1] * dt * 0.6
@@ -85,9 +88,11 @@ class Flare:
                 self.absorb()
 
             # corner case bug that made the player slingshot if the hook is too long
-            if self.hook_direction and self.game.world.player.pos[1] < self.pos[1]:
+            if self.hook_direction and self.game.world.player.pos[1] < self.pos[1] and self.hook_pos_difference > 100:
+                # player below
                 self.absorb()
-            elif not self.hook_direction and self.game.world.player.pos[1] > self.pos[1]:
+            elif not self.hook_direction and self.game.world.player.pos[1] > self.pos[1] and self.hook_pos_difference < -100:
+                # player above
                 self.absorb()
                 
         if not self.game.world.player.hook.state in [2, 3]:
@@ -112,6 +117,9 @@ class FlareManager:
 
     def get_first_ind(self):
         return self.flares[0]
+    
+    def reset(self):
+        self.flares = []
 
     def update(self, dt):
         self.blink_timer -= dt

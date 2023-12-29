@@ -43,6 +43,14 @@ def get_angle(start, end):
 def clamp(value_to_clamp, min_val, max_val):
     return max(min_val, min(max_val, value_to_clamp))
 
+def easeInOutCubic(t):
+    t *= 2
+    if t < 1:
+        return t * t * t / 2
+    else:
+        t -= 2
+        return (t * t * t + 2) / 2
+
 def swap_color(img,old_c,new_c):
     e_colorkey = (0, 0, 0, 0)
     img.set_colorkey(old_c)

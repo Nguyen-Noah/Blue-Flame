@@ -6,6 +6,7 @@ class Input:
     def __init__(self, game):
         self.game = game
         self.mouse_pos = (0, 0)
+        self.retry = False
 
         self.reset()
 
@@ -22,6 +23,8 @@ class Input:
         }
 
     def soft_reset(self):
+        self.retry = False
+
         for binding in self.mouse_state:
             self.mouse_state[binding] = False
             
@@ -36,6 +39,10 @@ class Input:
             if event.type == QUIT or (event.type == KEYDOWN and event.key == 27):
                 pygame.quit()
                 sys.exit()
+
+            if event.type == KEYDOWN:
+                if event.key == 114:
+                    self.retry = True
 
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:

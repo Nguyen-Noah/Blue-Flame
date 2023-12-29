@@ -14,9 +14,7 @@ def glow(loc, radius, color):
     render_surf = pygame.Surface((radius * 2, radius * 2))
     pygame.draw.circle(render_surf, color, (radius, radius), radius)
 
-    rotated_surf = render_surf
-
-    GLOW_SURFS.append([rotated_surf, (loc[0] - rotated_surf.get_width() // 2, loc[1] - rotated_surf.get_height() // 2)])
+    GLOW_SURFS.append([render_surf, (loc[0] - render_surf.get_width() // 2, loc[1] - render_surf.get_height() // 2)])
     GLOW_CACHE[glow_id] = render_surf
 
 def render_glow(surf):
